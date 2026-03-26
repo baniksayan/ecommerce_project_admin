@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mandal Variety — Admin</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/layout.css" />
+    <link rel="stylesheet" href="./assets/css/components.css" />
+  </head>
+  <body>
+    <div class="app" id="appRoot">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <div class="brand__mark" aria-hidden="true">MV</div>
+          <div class="brand__text">
+            <div class="brand__title">Mandal Variety</div>
+            <div class="brand__subtitle">Admin Panel</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Primary">
+          <a class="nav__item" href="#dashboard" data-route="dashboard">
+            <span class="nav__label">Dashboard</span>
+          </a>
+          <a class="nav__item" href="#products" data-route="products">
+            <span class="nav__label">Products</span>
+          </a>
+          <a class="nav__item" href="#orders" data-route="orders">
+            <span class="nav__label">Orders</span>
+          </a>
+          <a class="nav__item" href="#users" data-route="users">
+            <span class="nav__label">Users</span>
+          </a>
+          <a class="nav__item" href="#settings" data-route="settings">
+            <span class="nav__label">Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div class="muted">v1 (static demo)</div>
+        </div>
+      </aside>
+
+      <div class="shell">
+        <header class="header">
+          <button class="iconBtn header__menuBtn" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+            <span aria-hidden="true">☰</span>
+          </button>
+
+          <div class="header__title">
+            <div class="h1" id="pageTitle">Dashboard</div>
+            <div class="muted" id="pageSubtitle">Overview</div>
+          </div>
+
+          <div class="header__search">
+            <label class="srOnly" for="searchInput">Search</label>
+            <input class="input" id="searchInput" type="search" placeholder="Search (static)" />
+          </div>
+
+          <div class="header__profile">
+            <div class="profile">
+              <div class="profile__meta">
+                <div class="profile__name">Admin</div>
+                <div class="profile__role">Manager</div>
+              </div>
+              <div class="avatar" aria-label="Profile avatar">A</div>
+            </div>
+          </div>
+        </header>
+
+        <main class="main" id="mainContent" tabindex="-1"></main>
+      </div>
+    </div>
+
+    <script type="module" src="./assets/js/app.js"></script>
+  </body>
+</html>
