@@ -1,78 +1,166 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mandal Variety — Admin</title>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link rel="stylesheet" href="./assets/css/layout.css" />
-    <link rel="stylesheet" href="./assets/css/components.css" />
-  </head>
-  <body>
-    <div class="app" id="appRoot">
-      <aside class="sidebar" id="sidebar">
-        <div class="sidebar__brand">
-          <div class="brand__mark" aria-hidden="true">MV</div>
-          <div class="brand__text">
-            <div class="brand__title">Mandal Variety</div>
-            <div class="brand__subtitle">Admin Panel</div>
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandal Variety — Admin Panel</title>
 
-        <nav class="nav" aria-label="Primary">
-          <a class="nav__item" href="#dashboard" data-route="dashboard">
-            <span class="nav__label">Dashboard</span>
-          </a>
-          <a class="nav__item" href="#products" data-route="products">
-            <span class="nav__label">Products</span>
-          </a>
-          <a class="nav__item" href="#orders" data-route="orders">
-            <span class="nav__label">Orders</span>
-          </a>
-          <a class="nav__item" href="#users" data-route="users">
-            <span class="nav__label">Users</span>
-          </a>
-          <a class="nav__item" href="#settings" data-route="settings">
-            <span class="nav__label">Settings</span>
-          </a>
-        </nav>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        <div class="sidebar__footer">
-          <div class="muted">v1 (static demo)</div>
-        </div>
-      </aside>
+  <!-- Tailwind CSS (CDN play) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50:  '#f0f5f0',
+              100: '#e3ede3',
+              200: '#c6dec6',
+              300: '#a9c5a0',
+              400: '#8fa38a',
+              500: '#647a67',
+              600: '#4a5c4c',
+              700: '#3c433b',
+              800: '#1f241f',
+              900: '#141814',
+            },
+            sb: {
+              DEFAULT: '#0f172a',
+              hover:   '#1e293b',
+              active:  '#334155',
+            },
+          },
+          animation: {
+            'fade-in':   'fadeIn .25s ease-out',
+            'slide-up':  'slideUp .3s ease-out',
+            'shimmer':   'shimmer 1.5s infinite',
+          },
+          keyframes: {
+            fadeIn:  { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            slideUp: { '0%': { opacity: '0', transform: 'translateY(12px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            shimmer: { '0%': { backgroundPosition: '-400px 0' }, '100%': { backgroundPosition: '400px 0' } },
+          },
+        },
+      },
+    };
+  </script>
 
-      <div class="shell">
-        <header class="header">
-          <button class="iconBtn header__menuBtn" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
-            <span aria-hidden="true">☰</span>
-          </button>
+  <!-- Bootstrap Grid Only -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap-grid.min.css">
 
-          <div class="header__title">
-            <div class="h1" id="pageTitle">Dashboard</div>
-            <div class="muted" id="pageSubtitle">Overview</div>
-          </div>
+  <!-- Custom overrides -->
+  <link rel="stylesheet" href="./assets/css/custom.css">
+</head>
 
-          <div class="header__search">
-            <label class="srOnly" for="searchInput">Search</label>
-            <input class="input" id="searchInput" type="search" placeholder="Search (static)" />
-          </div>
+<body class="bg-gray-50 font-sans text-gray-800 antialiased">
+  <!-- ========== Sidebar overlay (mobile) ========== -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
 
-          <div class="header__profile">
-            <div class="profile">
-              <div class="profile__meta">
-                <div class="profile__name">Admin</div>
-                <div class="profile__role">Manager</div>
-              </div>
-              <div class="avatar" aria-label="Profile avatar">A</div>
-            </div>
-          </div>
-        </header>
+  <!-- ========== Sidebar ========== -->
+  <aside id="sidebar"
+    class="fixed left-0 top-0 bottom-0 w-[260px] bg-sb z-50 flex flex-col
+           transition-transform duration-300 ease-in-out
+           -translate-x-full lg:translate-x-0">
 
-        <main class="main" id="mainContent" tabindex="-1"></main>
+    <!-- Brand -->
+    <div class="h-16 flex items-center gap-3 px-5 border-b border-white/[.08] flex-shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-500 flex items-center justify-center text-white font-extrabold text-sm shadow-lg shadow-brand-500/30">MV</div>
+      <div>
+        <div class="text-white font-bold text-[13px] tracking-tight leading-tight">Mandal Variety</div>
+        <div class="text-slate-400 text-[11px]">Admin Panel</div>
       </div>
     </div>
 
-    <script type="module" src="./assets/js/app.js"></script>
-  </body>
+    <!-- Navigation (rendered by JS) -->
+    <nav id="sidebarNav" class="flex-1 overflow-y-auto py-3 px-3 space-y-5 scrollbar-thin"></nav>
+
+    <!-- Footer -->
+    <div class="p-4 border-t border-white/[.08] flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-brand-400/80 flex items-center justify-center text-white text-xs font-bold">A</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-white text-xs font-semibold truncate">Admin User</div>
+          <div class="text-slate-500 text-[11px] truncate">admin@mandalvariety.com</div>
+        </div>
+        <button class="text-slate-500 hover:text-white transition" title="Logout">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== Main shell ========== -->
+  <div id="shell" class="lg:ml-[260px] min-h-screen flex flex-col transition-all duration-300">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-200/70 h-16 flex items-center px-4 lg:px-6 gap-3 flex-shrink-0">
+      <!-- Hamburger -->
+      <button id="menuToggle" class="lg:hidden w-9 h-9 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-100 active:scale-95 transition">
+        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <!-- Page title -->
+      <div class="flex-1 min-w-0">
+        <h1 id="pageTitle" class="text-base font-bold text-gray-900 truncate leading-tight">Dashboard</h1>
+        <p id="pageSubtitle" class="text-[11px] text-gray-500 truncate hidden sm:block">Overview &amp; Analytics</p>
+      </div>
+
+      <!-- Search -->
+      <div class="hidden md:flex items-center w-72 bg-gray-50 rounded-xl border border-gray-200 px-3 h-9 gap-2 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20 transition-all">
+        <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="globalSearch" type="search" placeholder="Search anything…" class="bg-transparent border-none outline-none text-sm flex-1 placeholder-gray-400 min-w-0">
+        <kbd class="hidden lg:inline text-[10px] text-gray-400 bg-gray-200/70 rounded px-1.5 py-0.5 font-mono">⌘K</kbd>
+      </div>
+
+      <!-- Notification bell -->
+      <button id="notifBtn" class="relative w-9 h-9 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-100 active:scale-95 transition">
+        <svg class="w-[18px] h-[18px] text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center ring-2 ring-white">3</span>
+      </button>
+
+      <!-- Profile -->
+      <div id="profileDropdown" class="relative">
+        <button id="profileBtn" class="flex items-center gap-2 pl-3 pr-1.5 py-1 rounded-xl border border-gray-200 hover:bg-gray-100 active:scale-[.98] transition">
+          <span class="text-sm font-medium text-gray-700 hidden sm:inline">Admin</span>
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-400 to-brand-500 flex items-center justify-center text-white text-xs font-bold">A</div>
+        </button>
+        <div id="profileMenu" class="absolute right-0 top-12 w-52 bg-white border border-gray-200 rounded-xl shadow-xl shadow-gray-200/50 py-1.5 hidden z-50 animate-fade-in">
+          <div class="px-4 py-2 border-b border-gray-100">
+            <div class="text-sm font-semibold text-gray-800">Admin User</div>
+            <div class="text-xs text-gray-500">admin@mandalvariety.com</div>
+          </div>
+          <a href="#settings" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Settings
+          </a>
+          <div class="border-t border-gray-100 my-1"></div>
+          <button class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content area (views render here) -->
+    <main id="mainContent" class="flex-1 p-4 lg:p-6 animate-fade-in" tabindex="-1"></main>
+  </div>
+
+  <!-- ========== Modal root ========== -->
+  <div id="modalRoot"></div>
+
+  <!-- ========== Toast root ========== -->
+  <div id="toastRoot" class="fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========== App entry ========== -->
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
 </html>

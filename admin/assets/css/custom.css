@@ -1,0 +1,113 @@
+/* ===== Custom overrides & animations ===== */
+
+/* Scrollbar (thin, subtle) */
+.scrollbar-thin::-webkit-scrollbar { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 4px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
+
+body::-webkit-scrollbar { width: 6px; }
+body::-webkit-scrollbar-track { background: #f1f1f1; }
+body::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* Page transition */
+.view-enter {
+  animation: slideUp .3s ease-out;
+}
+
+@keyframes slideUp {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth transitions for interactive elements */
+.nav-link {
+  transition: all .15s ease;
+}
+
+/* Tab active indicator */
+.tab-active {
+  position: relative;
+}
+.tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #647a67;
+  border-radius: 2px 2px 0 0;
+}
+
+/* Canvas chart container */
+.chart-container {
+  position: relative;
+  width: 100%;
+}
+.chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Badge pulse for alerts */
+.pulse-dot {
+  animation: pulse-ring 1.5s cubic-bezier(.215,.61,.355,1) infinite;
+}
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(239,68,68,.5); }
+  80%  { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  animation: fadeIn .2s ease-out;
+}
+.modal-panel {
+  animation: slideUp .25s ease-out;
+}
+
+/* Table hover */
+.table-row-hover:hover {
+  background-color: rgba(100,122,103,.04);
+}
+
+/* Toggle switch */
+.toggle-track {
+  width: 40px; height: 22px; border-radius: 11px;
+  background: #d1d5db; cursor: pointer;
+  transition: background .2s;
+  position: relative;
+}
+.toggle-track.active { background: #647a67; }
+.toggle-knob {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: white; position: absolute;
+  top: 2px; left: 2px;
+  transition: transform .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.toggle-track.active .toggle-knob { transform: translateX(18px); }
+
+/* Status dot */
+.status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Print hide */
+@media print {
+  #sidebar, #sidebarOverlay, header { display: none !important; }
+  #shell { margin-left: 0 !important; }
+}
